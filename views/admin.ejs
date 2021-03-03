@@ -1,0 +1,21 @@
+<h2>List of users</h2>
+
+<p class="lead mb-3">Welcome <%= user.name %></p>
+
+<h3>Current active sessions</h3>
+
+<% users.forEach(function(user) { %>
+
+<div style="margin-bottom: 30px">
+  <h4>Session id: <span><%= user[0] %></span></h4>
+  <h4>User id: <span><%= user[1] %></span></h4>
+
+  <form action="/auth/revoke" method="post">
+    <input type="hidden" value="<%= user[0] %>" name="session_id" />
+    <input type="hidden" value="<%= user[1] %>" name="user_id" />
+
+    <input type="submit" value="Revoke Session" />
+  </form>
+</div>
+
+<% }); %>
