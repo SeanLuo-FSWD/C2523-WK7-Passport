@@ -15,7 +15,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/admin", ensureAuthenticated, (req, res) => {
+router.get("/admin", ensureAuthenticated, isAdmin, (req, res) => {
   const objectArray = Object.entries(req.sessionStore.sessions);
   let users = [];
 
@@ -26,16 +26,21 @@ router.get("/admin", ensureAuthenticated, (req, res) => {
     }
   });
 
-  if (req.user.role === "admin") {
-    res.render("admin", {
-      user: req.user,
-      users: users,
-    });
-  } else {
-    res.render("dashboard", {
-      user: req.user,
-    });
-  }
+  res.render("admin", {
+    user: req.user,
+    users: users,
+  });
+
+  // if (req.user.role === "admin") {
+  //   res.render("admin", {
+  //     user: req.user,
+  //     users: users,
+  //   });
+  // } else {
+  //   res.render("dashboard", {
+  //     user: req.user,
+  //   });
+  // }
 });
 
 module.exports = router;
